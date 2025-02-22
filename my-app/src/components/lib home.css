@@ -1,0 +1,91 @@
+/* General Styles */
+body {
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Header Styles */
+header {
+    background-color: #003366;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+header .department {
+    margin: 0;
+    font-size: 18px;
+    color: #cccccc;
+}
+
+/* Navigation Menu Styles */
+nav {
+    background-color: #005599;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Search Bar Section */
+.homesearch-section {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.homesearch-bar {
+    width: 400px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.homesearch-btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #005599;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.homesearch-btn:hover {
+    background-color: #003366;
+}
+
+/* Footer Styles */
+.homefooter {
+    background-color: #003366;
+    color: white;
+    text-align: center;
+    padding: 4px ;
+    position:fixed;
+    width: 100%;
+    bottom: 10;
+}

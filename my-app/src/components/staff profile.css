@@ -1,0 +1,177 @@
+/* General Styles */
+
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+/* Header Styles */
+header {
+  background-color: #003366;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 36px;
+}
+
+header .department {
+  margin: 0;
+  font-size: 18px;
+  color: #cccccc;
+}
+
+/* Navigation Menu */
+nav {
+  background-color: #005599;
+  padding: 10px;
+}
+
+nav ul {
+  list-style: none;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 20px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Profile Section */
+/* Profile Section */
+.staffprofile-section h2 {
+  padding: 0px;
+  text-align:left;
+  
+  
+  
+  
+
+}
+/* Profile Details */
+.staffprofile-details {
+  display:flexbox;
+  gap: 5px;
+  font-size: 18px;
+  margin-top:0px;
+  margin-left:65px; ;
+}
+
+.staffprofile-details p {
+  margin: 0px;
+  color: #005599;
+}
+
+.staffprofile-details span {
+  font-weight: bold;
+  color: #003366;
+}
+
+
+  
+
+
+.staffprofile-header h2 {
+  color: #003366;
+  font-size: 25px;
+  margin-left:65px;
+  padding-top: 55px;
+}
+
+.staffprofile-details p {
+  font-size: 18px;
+  margin: 5px 0;
+  font-family: 'Times New Roman', Times, serif;
+  
+}
+
+/* Search Section */
+.staffprofilesearch-section {
+  width: 100px;
+  margin-top: -100px;
+  text-align: center;
+  margin: left 100px ;
+}
+
+.staffprofilesearch-bar {
+  padding: 8px;
+  width: 400px;
+  border: 1px solid #1d1e1f;
+  border-radius: 4px;
+  margin-top: -50px;
+  margin-bottom: 0px;
+  margin-left: 600px;
+  
+}
+
+.staffprofilesearch-btn {
+  padding: 10px 20px;
+  margin-left: 1000px;
+  margin-top: -50px;
+  margin-bottom: 0px;
+  background-color: #005599;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.staffprofilesearch-btn:hover {
+  background-color: #108ff7;
+}
+
+table {
+  margin: 10px auto;
+  width: 80%;
+  border-collapse: collapse;
+  text-align: center;
+  background: #fff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+table th {
+  background-color: #005599;
+  color: white;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+footer {
+  background-color: #003366;
+  color: white;
+  text-align: center;
+  padding: 1px;
+  position: relative;
+  
+  margin-top: 200;
+  width: 100%;
+}

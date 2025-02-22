@@ -1,0 +1,258 @@
+body {
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Header Styles */
+header {
+    background-color: #003366;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.header-content h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.department {
+    margin: 0;
+    font-size: 18px;
+    color: #cccccc;
+}
+
+/* Navigation Menu */
+nav {
+    background-color: #005599;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Profile Section */
+.studentprofile-section h2 {
+    padding: 10px;
+    text-align:left;
+    
+    
+    
+    
+
+}
+/* Profile Details */
+.studentprofile-details {
+    display:flow-root;
+    grid-template-columns:300px 300px;
+    gap: 5px;
+    font-size: 18px;
+    margin-top:-5px;
+    margin-left:65px; ;
+}
+
+.studentprofile-details p {
+    margin: 0px;
+    color: #005599;
+}
+
+.studentprofile-details span {
+    font-weight: bold;
+    color: #003366;
+}
+
+
+    
+
+
+.studentprofile-header h2 {
+    color: #003366;
+    font-size: 25px;
+    margin-left:65px;
+    padding-top: 55px;
+}
+
+.studentprofile-details p {
+    font-size: 18px;
+    margin: 5px 0;
+    font-family: 'Times New Roman', Times, serif;
+    
+}
+
+/* Search Section */
+.studentprofilesearch-section {
+    width: 100px;
+    margin-top: -100px;
+    text-align: center;
+    margin: left 100px ;
+}
+
+.studentprofilesearch-bar {
+    padding: 8px;
+    width: 400px;
+    border: 1px solid #1d1e1f;
+    border-radius: 4px;
+    margin-top: -50px;
+    margin-bottom: 0px;
+    margin-left: 600px;
+    
+}
+
+.studentprofilesearch-btn {
+    padding: 10px 20px;
+    margin-left: 1000px;
+    margin-top: -50px;
+    margin-bottom: 0px;
+    background-color: #005599;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.studentprofilesearch-btn:hover {
+    background-color: #108ff7;
+}
+
+/* Table Styles */
+.studenttable {
+    
+    width: 80%;
+    border-collapse: collapse;
+    text-align: center;
+    background: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 150px;
+  }
+  
+  .studenttable th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+  
+ .studenttable th {
+    background-color: #005599;
+    color: white;
+  }
+  
+  .studenttable tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .studenttable tr:hover {
+    background-color: #f1f1f1;
+  }
+  /* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal Content */
+.modal-content {
+    background: #f5f6f7;
+    border-radius: 8px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+}
+
+/* Modal Header */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+
+    
+/* Modal Body */
+.modal-body {
+    margin: 20px 0;
+    padding: 10px;
+    
+
+    
+}
+.modal-body p{
+    
+    color: #1a245f;
+    font-size: medium;
+    font-family: 'Times New Roman', Times, serif;
+    font-style:inherit;
+    text-shadow: #027cda;
+    
+}
+
+/* Modal Footer */
+.modal-footer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.confirm-btn,
+.cancel-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.confirm-btn {
+    background-color: #394ca0;
+    color: #fff;
+}
+
+.cancel-btn {
+    background-color: #8e3f4e;
+    color: #fff;
+}
+
+.confirm-btn:hover {
+    background-color: #869083;
+}
+
+.cancel-btn:hover {
+    background-color: #675e5eee;
+}
+
+footer {
+    background-color: #003366;
+    color: white;
+    text-align: center;
+    padding: 1px;
+    position: relative;
+    
+    margin-top: 200;
+    width: 100%;
+  }
