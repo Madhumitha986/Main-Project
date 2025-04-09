@@ -7,6 +7,10 @@ import StudentProfile from './components/StudentProfile';
 import StaffProfile from './components/StaffProfile'; 
 import LibrarianProfile from './components/librarian profile';
 import SearchResults from './components/SearchResults';
+import ProfileSearchResults from './components/ProfileSearchResults';
+import StudentDetails from './components/studentdetails';
+import StaffDetails from './components/staffdetails';
+
 
 function App() {
   return (
@@ -21,7 +25,9 @@ function App() {
           <Route path="/Liblogin"element={<LibLogin />} />
           <Route path="/librarianProfile"element={<LibrarianProfile />} />
           <Route path="/search-results" element={<SearchResults />} />
-
+          <Route path="/profile-search-results" element={<ProfileSearchResults />} />
+          <Route path="/StudentDetails/:rollnumber" element={<StudentDetails />} />
+          <Route path="/StaffDetails/:staffid" element={<StaffDetails />} />
           <Route path="/LibraryRegistration" element={<LibraryRegistration />} />  {/* Register page */}
         </Routes>
       </div>

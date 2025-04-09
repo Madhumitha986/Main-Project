@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import LibLogin from "./LibLogin";
 
 const SearchResults = () => {
     const [books, setBooks] = useState([]);
     const location = useLocation();
     const navigate = useNavigate();
-    const isLoggedIn = !!localStorage.getItem("userId");
 
     const queryParams = new URLSearchParams(location.search);
     const searchQuery = queryParams.get("query");
@@ -16,7 +14,11 @@ const SearchResults = () => {
         if (searchQuery) {
             console.log("here")
             axios.get(`http://localhost:5000/api/search-books?query=${searchQuery}`)
-                .then(response => setBooks(response.data))
+            .then(response => {
+                console.log("Books from backend:", response.data);  // ADD THIS
+                setBooks(response.data);
+            })
+                
                 .catch(error => console.error("Error fetching books:", error));
         }
     }, [searchQuery]);

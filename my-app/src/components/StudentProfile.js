@@ -3,8 +3,8 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import './lib profile.css';
-import { io } from 'socket.io-client';
-const socket = io('http://localhost:3000');
+//import { io } from 'socket.io-client';
+//const socket = io('http://localhost:5000');
 
 
 
@@ -18,9 +18,15 @@ const StudentProfile = () => {
     const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
     const location = useLocation();
     const navigate = useNavigate();
+    const [query, setQuery] = useState("");
+    
 
+    
+    
+    
+    
     useEffect(() => {
-        // Fetch user profile and borrowed books
+         // Fetch user profile and borrowed books
         const fetchProfileAndBooks = async () => {
             const queryParams = new URLSearchParams(location.search);
             const userId = queryParams.get('userId');
@@ -42,7 +48,7 @@ const StudentProfile = () => {
                 setLoading(false);
             }
         };
-
+        
         // Retrieve selected book from localStorage
         const fetchSelectedBook = () => {
             const storedBook = localStorage.getItem('selectedBook');
@@ -60,26 +66,44 @@ const StudentProfile = () => {
         fetchProfileAndBooks();
         fetchSelectedBook();
     }, [location.search]);
+    console.log("Profile Data:", profile);
+console.log("Selected Book:", selectedBook);
 
-    const handleBorrowRequest = (bookId, userId) => {
-        try {
-            axios.post('http://localhost:5000/borrowRequest', {
-                userId: userId, // Student's userId
-                bookName: bookId // Book ID or name
-            })
-            .then((response) => {
-                console.log('Borrow request sent',response.data);
-                socket.emit('borrowRequest', { userId, bookName: bookId }); // Emit socket event
-            })
-            .catch(error => console.error('Error sending borrow request', error))
-            .finally(() => {
-                setIsModalOpen(false); // Close modal after request
-            });
-        } catch (error) {
-            console.error('Unexpected error:', error);
-            setIsModalOpen(false); // Ensure modal is closed in case of error
-        }
+
+
+const handleBorrowRequest = () => {
+    if (!selectedBook || !profile) {
+        console.error("Missing book or user data.");
+        return;
+    }
+
+    // Trim extra spaces or new lines from book name
+    const bookNameClean = selectedBook.name ? selectedBook.name.trim() : "Unknown Book";
+    console.log("Selected Book Data:", selectedBook);
+
+    
+    const requestData = {
+        userId: profile.rollnumber,  // Use roll number as user ID
+        bookId: selectedBook.book_id,  
+        bookName: bookNameClean, 
+        borrowerType: "student",  // Set borrower type explicitly
     };
+
+    console.log("Sending Borrow Request:", requestData);
+
+    axios.post('http://localhost:5000/api/borrowRequest', requestData)
+        .then(response => {
+            console.log('Borrow request sent', response.data);
+            alert("Borrow request sent successfully!");
+           // socket.emit('borrowRequest', { userId: profile.rollnumber, bookName: selectedBook.id });
+        })
+        .catch(error => console.error('Error sending borrow request', error))
+        .finally(() => {
+            setIsModalOpen(false);
+        });
+ 
+    };
+    
     
     const handleLogout = () => {
         localStorage.removeItem('selectedBook'); // Clear selected books
@@ -93,6 +117,21 @@ const StudentProfile = () => {
     if (errorMessage) {
         return <div>{errorMessage}</div>;
     }
+    const handleSearch = () => {
+        localStorage.setItem('searchQuery', query);
+        
+        if (query.length > 0) {
+            navigate(`/profile-search-results?query=${query}&userId=${profile?.rollnumber}&borrowerType=student` ,{ state: { profile } });
+
+            
+            
+        }
+    };
+const closeModal = () => {
+    setIsModalOpen(false);
+    localStorage.removeItem('selectedBook');
+};
+    
 
     return (
         <div>
@@ -125,12 +164,21 @@ const StudentProfile = () => {
 
                 {/* Search Bar */}
                 <section className="studentprofilesearch-section">
-                    <input type="text" placeholder="Search for books..." className="studentprofilesearch-bar" />
-                    <button type="submit" className="studentprofilesearch-btn">Search</button>
+                <input
+                   type="text"
+                   value={query}
+                   onChange={(e) => setQuery(e.target.value)} // Now `setQuery` is used
+                   placeholder="Search for books..."
+                   className="studentprofilesearch-bar"
+/>
+                    <button 
+                type="submit" 
+                className="studentprofilesearch-btn"
+                onClick={handleSearch}>Search</button>
                 </section>
 
                 {/* Borrowed Books Section */}
-                <table className='studenttable'>
+              <table className='studenttable'>
                     <thead>
                         <tr>
                             <th>Book Name</th>
@@ -178,8 +226,10 @@ const StudentProfile = () => {
                     <p>Do you want to borrow the book "{selectedBook?.name}"?</p>
                 </div>
                 <div className="modal-footer">
-                    <button onClick={handleBorrowRequest} className="confirm-btn">Yes</button>
-                    <button onClick={() => setIsModalOpen(false)} className="cancel-btn">No</button>
+                <button onClick={() => handleBorrowRequest(selectedBook?.id, profile?.id,selectedBook?.bookName, profile?.borrowerType)} className="confirm-btn">Yes</button>
+
+                <button onClick={closeModal} className="cancel-btn">No</button>
+
                 </div>
             </Modal>
         </div>
