@@ -146,7 +146,7 @@ const closeModal = () => {
             {/* Navigation Menu */}
             <nav>
                 <ul>
-                    <li><a href="lib_advance.html">Advanced search</a></li>
+                    
                     <li><a href="LibLogin" onClick={handleLogout}>Logout</a></li>
                 </ul>
             </nav>

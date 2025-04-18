@@ -133,8 +133,7 @@ const LibLogin = () => {
                     <li><a href="LibraryHome">Home</a></li>
                     <li><a href="LibLogin">Login</a></li>
                     <li><a href="LibraryRegistration">Register</a></li>
-                    <li><a href="lib-advance.html">Advanced search</a></li>
-                    <li><a href="#">Add a Book</a></li>
+                    
                     <li><a href="#">About Us</a></li>
                 </ul>
             </nav>

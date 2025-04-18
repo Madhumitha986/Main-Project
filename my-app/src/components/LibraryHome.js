@@ -33,8 +33,7 @@ const LibraryHome = () => {
                     <li><a href="/LibraryHome">Home</a></li>
                     <li><a href="/LibLogin">Login</a></li>
                     <li><a href="/LibraryRegistration">Register</a></li>
-                    <li><a href="/">Advanced search</a></li>
-                    <li><a href="/">Add a book</a></li>
+                    
                     <li><a href="#">About Us</a></li>
                 </ul>
             </nav>

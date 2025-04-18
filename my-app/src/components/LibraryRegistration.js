@@ -95,8 +95,8 @@ function LibraryRegistration() {
                     <li><a href="LibraryHome">Home</a></li>
                     <li><a href="LibLogin">Login</a></li>
                     <li><a href="LibraryRegistration">Register</a></li>
-                    <li><a href="lib_advance.html">Advanced Search</a></li>
-                    <li><a href="#">Add a Book</a></li>
+                    {/*<li><a href="lib_advance.html">Advanced Search</a></li>
+                    <li><a href="#">Add a Book</a></li>*/}
                     <li><a href="#">About Us</a></li>
                 </ul>
             </nav>
