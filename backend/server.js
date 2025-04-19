@@ -4,6 +4,9 @@ import express from "express";
 import mysql from "mysql";
 import cors from "cors";
 import searchRoutes from "./searchRoutes.js";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 
 import http from "http";
@@ -34,10 +37,10 @@ app.use(cors({
 app.use(express.json());
 // MySQL connection
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'library_db'  // Your database name
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,  // Your database name
 });
 app.use("/api", searchRoutes(db,io));
 app.use((req, res, next) => {
