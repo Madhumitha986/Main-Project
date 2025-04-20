@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './lib register.css'; // Ensure your CSS file is in the same folder
 import axios from 'axios'; // Import axios
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 function LibraryRegistration() {
     const [activeTab, setActiveTab] = useState('Student');
@@ -44,26 +45,34 @@ function LibraryRegistration() {
     // Submit handler for Student registration
     const handleStudentSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:5000/register-student', studentData)
+        axios.post(`${backendUrl}/register-student`, studentData)
           .then(response => {
             console.log('Student registered successfully:', response.data);
             alert('Student registered successfully'); 
           })
           .catch(error => {
-            console.error('Error registering student:', error);
+            if (error.response) {
+                alert(error.response.data.message); // This shows "You are already registered"
+              } else {
+                alert("An unknown error occurred");
+              }
           });
     };
 
     // Submit handler for Staff registration
     const handleStaffSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:5000/register-staff', staffData)
+        axios.post(`${backendUrl}/register-staff`, staffData)
           .then(response => {
             console.log('Staff registered successfully:', response.data);
             alert('registered successfully');
           })
           .catch(error => {
-            console.error('Error registering staff:', error);
+            if (error.response) {
+                alert(error.response.data.message); // This shows "You are already registered"
+              } else {
+                alert("An unknown error occurred");
+              };
           });
     };
 

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 function StudentDetails() {
   const { rollnumber } = useParams();
@@ -12,7 +13,7 @@ function StudentDetails() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/searchstudent/${rollnumber}`)
+    axios.get(`${backendUrl}/api/searchstudent/${rollnumber}`)
       .then(response => {
         setStudentData(response.data);
         setLoading(false);

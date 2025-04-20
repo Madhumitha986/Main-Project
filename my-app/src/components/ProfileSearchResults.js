@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 const ProfileSearchResults = () => {
     const [books, setBooks] = useState([]);
     const [selectedBorrower, setSelectedBorrower] = useState(null);
@@ -15,7 +15,7 @@ const ProfileSearchResults = () => {
 
     useEffect(() => {
         if (searchQuery) {
-            axios.get(`http://localhost:5000/api/profile-search?query=${searchQuery}`)
+            axios.get(`${backendUrl}/api/profile-search?query=${searchQuery}`)
                 .then(response => setBooks(response.data))
                 .catch(error => console.error("Error fetching books:", error));
         }
@@ -43,14 +43,14 @@ const ProfileSearchResults = () => {
             borrowerType
         };
 
-        axios.post('http://localhost:5000/api/borrowRequest', requestData)
+        axios.post(`${backendUrl}/api/borrowRequest`, requestData)
             .then(() => alert('Borrow request sent successfully!'))
             .catch(() => alert('Failed to send borrow request.'));
     };
 
     const fetchBorrowerDetails = async (bookId) => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/borrower-details/${bookId}`);
+            const response = await axios.get(`${backendUrl}/api/borrower-details/${bookId}`);
             setSelectedBorrower(response.data);
             setShowModal(true);
         } catch (error) {

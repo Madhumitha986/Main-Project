@@ -6,7 +6,7 @@ import './lib profile.css';
 //import { io } from 'socket.io-client';
 //const socket = io('http://localhost:5000');
 
-
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 
 const StudentProfile = () => {
@@ -30,6 +30,7 @@ const StudentProfile = () => {
         const fetchProfileAndBooks = async () => {
             const queryParams = new URLSearchParams(location.search);
             const userId = queryParams.get('userId');
+            console.log("user id",userId);
             const borrowerType = queryParams.get('borrowerType');
 
             if (!userId || !borrowerType) {
@@ -39,7 +40,7 @@ const StudentProfile = () => {
             }
 
             try {
-                const response = await axios.get(`http://localhost:5000/profile?userId=${userId}&borrowerType=${borrowerType}`);
+                const response = await axios.get(`${backendUrl}/profile?userId=${userId}&borrowerType=${borrowerType}`);
                 setProfile(response.data.user);
                 setBooks(response.data.books);
             } catch (error) {
@@ -91,7 +92,7 @@ const handleBorrowRequest = () => {
 
     console.log("Sending Borrow Request:", requestData);
 
-    axios.post('http://localhost:5000/api/borrowRequest', requestData)
+    axios.post(`${backendUrl}/api/borrowRequest`, requestData)
         .then(response => {
             console.log('Borrow request sent', response.data);
             alert("Borrow request sent successfully!");
@@ -226,7 +227,7 @@ const closeModal = () => {
                     <p>Do you want to borrow the book "{selectedBook?.name}"?</p>
                 </div>
                 <div className="modal-footer">
-                <button onClick={() => handleBorrowRequest(selectedBook?.id, profile?.id,selectedBook?.bookName, profile?.borrowerType)} className="confirm-btn">Yes</button>
+                <button onClick={handleBorrowRequest} className="confirm-btn">Yes</button>
 
                 <button onClick={closeModal} className="cancel-btn">No</button>
 

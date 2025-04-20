@@ -64,7 +64,14 @@ db.connect((err) => {
 // Example route for student registration
 app.post('/register-student', (req, res) => {
     const { name, rollnumber, email, contactnumber, academicyear } = req.body;
- 
+    const checkQuery = 'SELECT * FROM students WHERE rollnumber = ?';
+
+    db.query(checkQuery, [rollnumber], (err, result) => {
+        if (err) return res.status(500).json({ message: 'Server error' });
+
+        if (result.length > 0) {
+            return res.status(400).json({ message: 'You are already registered' });
+        }
     const query = 'INSERT INTO students (name, rollnumber, email, contactnumber, academicyear) VALUES (?, ?, ?, ?, ?)';
 
     db.query(query, [name, rollnumber, email, contactnumber, academicyear], (err, result) => {
@@ -74,6 +81,7 @@ app.post('/register-student', (req, res) => {
         }
         res.status(200).json({ message: 'Student registered successfully' });
     });
+});
 });
 app.post('/register-librarian', (req, res) => {
     const { username, password, confirmPassword } = req.body;
@@ -91,21 +99,31 @@ app.post('/register-librarian', (req, res) => {
 });
 app.post('/register-staff', (req, res) => {
     const { name, staffid, contactnumber } = req.body;
-    const query = 'INSERT INTO staff (name, staffid,contactnumber) VALUES (?, ?, ?)';
+    const checkQuery = 'SELECT * FROM staff WHERE staffid = ?';
+
+    db.query(checkQuery, [staffid], (err, result) => {
+        if (err) return res.status(500).json({ message: 'Server error' });
+
+        if (result.length > 0) {
+            return res.status(400).json({ message: 'You are already registered' });
+        }
+    const insertQuery = 'INSERT INTO staff (name, staffid,contactnumber) VALUES (?, ?, ?)';
     
 
 
-    db.query(query, [name, staffid,contactnumber,], (err, result) => {
+    db.query(insertQuery, [name, staffid,contactnumber,], (err, result) => {
         if (err) {
             console.error('Error inserting data:', err);
             return res.status(500).json({ error: 'Database error' });
         }
-        res.status(200).json({ message: 'Student registered successfully' });
+        res.status(200).json({ message: 'Staff registered successfully' });
     });
+});
 });
 app.post('/login-student', (req, res) => {
     const { rollnumber } = req.body;
-    const query =' SELECT id FROM students WHERE rollnumber = ?';
+    console.log("roll number from request:",rollnumber);
+    const query =' SELECT * FROM students WHERE rollnumber = ?';
 
     db.query(query, [rollnumber], (err, results) => {
         if (err) {
@@ -115,7 +133,7 @@ app.post('/login-student', (req, res) => {
             return res.status(400).json({ error: 'Student not found' });
         }
         // Successfully logged in, send the student ID
-        res.status(200).json({ success: true, userId: results[0].id });
+        res.status(200).json({ success: true, userId: results[0].rollnumber });
 
     });
 });
@@ -192,6 +210,7 @@ console.log(req.body);
 });
 app.get('/staffProfile', (req, res) => {
     const { staffid } = req.query;
+    console.log("Fetching borrow details for staffid:", staffid);
 
     if (!staffid) {
         return res.status(400).json({ error: 'Staff ID is required' });
@@ -207,7 +226,7 @@ app.get('/staffProfile', (req, res) => {
             DATE_FORMAT(borrow.return_date, '%Y-%m-%d') AS returnDate, 
             borrow.return_status AS returnStatus
         FROM borrow
-        JOIN books ON borrow.book_id = books.id
+        JOIN books ON borrow.book_id = books.book_id
         WHERE borrow.staff_id = ?`;
 
     db.query(staffQuery, [staffid], (err, staffResults) => {
@@ -215,17 +234,22 @@ app.get('/staffProfile', (req, res) => {
             console.error('Error fetching staff data:', err);
             return res.status(500).json({ error: 'Error fetching staff data' });
         }
+        console.log("Staff Query Result:", staffResults);
 
         db.query(booksQuery, [staffid], (err, bookResults) => {
             if (err) {
+                
                 console.error('Error fetching borrowed books:', err);
                 return res.status(500).json({ error: 'Error fetching borrowed books' });
             }
+            console.log("Book Results:", bookResults); // Log here for debugging
 
             res.status(200).json({
                 staff: staffResults[0],
                 books: bookResults
+            
             });
+           
         });
     });
 });
@@ -241,7 +265,7 @@ app.get('/profile', (req, res) => {
         return res.status(400).json({ error: 'Missing userId or borrowerType in query parameters' });
     }
 
-    const studentQuery = 'SELECT id, name, rollnumber, email, contactnumber, academicyear FROM students WHERE id = ?';
+    const studentQuery = 'SELECT id, name, rollnumber, email, contactnumber, academicyear FROM students WHERE rollnumber = ?';
 
     // Fetch profile information
     db.query(studentQuery, [userId], (err, userResults) => {
@@ -258,7 +282,7 @@ app.get('/profile', (req, res) => {
              DATE_FORMAT(borrow.approved_date, '%Y-%m-%d') AS borrowDate, 
             DATE_FORMAT(borrow.return_date, '%Y-%m-%d') AS returnDate,  borrow.return_status AS returnStatus
             FROM borrow
-            JOIN books ON borrow.book_id = books.id
+            JOIN books ON borrow.book_id = books.book_id
             WHERE borrow.student_id = ?
               AND borrow.borrower_type = 'student'`;
 
@@ -272,7 +296,9 @@ app.get('/profile', (req, res) => {
             res.status(200).json({
                 user: userResults[0],
                 books: bookResults
+                
             });
+           // console.log(books);
         });
     });
 });

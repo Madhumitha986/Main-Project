@@ -320,6 +320,7 @@ router.get('/stats', (req, res) => {
     });
 });
 router.get('/borrowed-books', (req, res) => {
+
     const query = `
         SELECT 
     b.book_id, 
@@ -351,6 +352,7 @@ LEFT JOIN staff st ON b.staff_id = st.staffid;
             return res.status(500).json({ error: 'Failed to fetch borrowed books' });
         }
         res.json(results);
+        console.log(results);
     });
 });
 
@@ -483,7 +485,7 @@ router.get('/download-books', async (req, res) => {
         res.end();
     });
 });
-router.post('/api/add-book', (req, res) => {
+router.post('/add-book', (req, res) => {
     const { book_id, name, author, bero_no, row_no, position } = req.body;
 
     const sql = `

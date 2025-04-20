@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { FiLogOut } from 'react-icons/fi'; // logout icon
 import { FiHome, FiUsers, FiUserCheck, FiBookOpen, FiBell, FiRepeat } from 'react-icons/fi'; // Add at the top
 import { saveAs } from 'file-saver'; 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 // Define icon mapping
 const tabIcons = {
   dashboard: <FiHome />,
@@ -46,7 +48,7 @@ const [position, setposition] =useState('');
 const handleAddBook = async (e) => {
     e.preventDefault();
     try {
-        const res = await axios.post('http://localhost:5000/api/add-book', {
+        const res = await axios.post(`${backendUrl}/api/add-book`, {
             book_id: bookId,
             name: bookName,
             author: author,
@@ -76,7 +78,7 @@ const handleAddBook = async (e) => {
 
 const handleDownloadBooks = async () => {
     try {
-        const response = await axios.get('http://localhost:5000/api/download-books', {
+        const response = await axios.get(`${backendUrl}/api/download-books`, {
             responseType: 'blob', // Important for binary file
         });
 
@@ -99,11 +101,12 @@ const handleDownloadBooks = async () => {
     useEffect(() => {
     const fetchBorrowDetails = async () => {
         try {
-            const studentResponse = await fetch('http://localhost:5000/api/student-borrow-details');
-            const staffResponse = await fetch('http://localhost:5000/api/staff-borrow-details');
+            const studentResponse = await fetch(`${backendUrl}/api/student-borrow-details`);
+            const staffResponse = await fetch(`${backendUrl}/api/staff-borrow-details`);
             
             const studentData = await studentResponse.json();
             const staffData = await staffResponse.json();
+            console.log("STAFF BORROW DATA:", staffData);
             
             setStudentBorrowDetails(studentData);
             setStaffBorrowDetails(staffData);
@@ -116,7 +119,7 @@ const handleDownloadBooks = async () => {
 
     
     useEffect(() => {
-        axios.get('http://localhost:5000/pending-requests')
+        axios.get(`${backendUrl}/pending-requests`)
             .then(response => {
                 console.log("Pending requests data:", response.data); // Log the response data
                 setNotifications(response.data);
@@ -126,18 +129,18 @@ const handleDownloadBooks = async () => {
     }, []);
     
     useEffect(() => {
-       axios.get('http://localhost:5000/api/stats')
+       axios.get(`${backendUrl}/api/stats`)
             .then(response => setStats(response.data))
             .catch(error => console.error("Error fetching statistics", error));
 
-        axios.get('http://localhost:5000/books')
+        axios.get(`${backendUrl}/books`)
             .then(response => setBooks(response.data))
             .catch(error => console.error("Error fetching books", error));
           
     }, []);
     const handleApproveRequest = async (id) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/approve-request`, {
+            const response = await fetch(`${backendUrl}/api/approve-request`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ requestId: id })  // ✅ Sending `id` in the body
@@ -158,7 +161,7 @@ const handleDownloadBooks = async () => {
     const handleRejectRequest = async (id) => {
         if (window.confirm('Are you sure you want to reject this request?')) {
             try {
-                const response = await fetch(`http://localhost:5000/api/reject-request`, {
+                const response = await fetch(`${backendUrl}/api/reject-request`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ requestId: id })
@@ -178,8 +181,9 @@ const handleDownloadBooks = async () => {
     useEffect(() => {
         const fetchBorrowedBooks = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/borrowed-books'); // Replace with your API endpoint
+                const response = await axios.get(`${backendUrl}/api/borrowed-books`); // Replace with your API endpoint
                 setBorrowedBooks(response.data);
+                console.log("borrowed book:",response.data);
                 
             } catch (error) {
                 console.error('Error fetching borrowed books:', error);
@@ -192,7 +196,7 @@ const handleDownloadBooks = async () => {
     // Handle Return Logic
     const handleReturn = async (bookId) => {
         try {
-            await axios.delete(`http://localhost:5000/api/return-book/${bookId}`); // Replace with your API endpoint
+            await axios.delete(`${backendUrl}/api/return-book/${bookId}`); // Replace with your API endpoint
             setBorrowedBooks((prevBooks) =>
                 prevBooks.filter((book) => book.book_id !== bookId)
             );

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 const SearchResults = () => {
     const [books, setBooks] = useState([]);
     const location = useLocation();
@@ -13,7 +13,7 @@ const SearchResults = () => {
     useEffect(() => {
         if (searchQuery) {
             console.log("here")
-            axios.get(`http://localhost:5000/api/search-books?query=${searchQuery}`)
+            axios.get(`${backendUrl}/api/search-books?query=${searchQuery}`)
             .then(response => {
                 console.log("Books from backend:", response.data);  // ADD THIS
                 setBooks(response.data);

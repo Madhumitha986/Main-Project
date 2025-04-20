@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 function StaffDetails() {
   const { staffid } = useParams();
@@ -11,7 +12,7 @@ function StaffDetails() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/searchstaff/${staffid}`)
+    axios.get(`${backendUrl}/api/searchstaff/${staffid}`)
       .then(response => {
         setStaffData(response.data);
         setLoading(false);

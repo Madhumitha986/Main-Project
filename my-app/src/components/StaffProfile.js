@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import './staff profile.css';
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const StaffProfile = () => {
     const [profile, setProfile] = useState(null);
@@ -27,7 +28,9 @@ const StaffProfile = () => {
 
         const fetchProfileAndBooks = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/staffProfile?staffid=${staffid}`);
+                const response = await axios.get(`${backendUrl}/staffProfile?staffid=${staffid}`);
+                console.log("Books received:", response.data.books);  // 👈 Add this
+
                 setProfile(response.data.staff);
                 setBooks(response.data.books);
             } catch (error) {
@@ -39,6 +42,8 @@ const StaffProfile = () => {
 
         const fetchSelectedBook = () => {
             const storedBook = localStorage.getItem('selectedBook');
+            console.log("STORED BOOKS:",storedBook);
+
             if (storedBook) {
                 try {
                     const bookObj = JSON.parse(storedBook);
@@ -49,7 +54,7 @@ const StaffProfile = () => {
                 }
             }
         };
-
+       
         fetchProfileAndBooks();
         fetchSelectedBook();
     }, [location.search]);
@@ -67,7 +72,7 @@ const StaffProfile = () => {
             borrowerType: "staff",
         };
 
-        axios.post('http://localhost:5000/api/borrowRequest', requestData)
+        axios.post(`${backendUrl}/api/borrowRequest`, requestData)
             .then(response => console.log('Borrow request sent', response.data))
             .catch(error => console.error('Error sending borrow request', error))
             .finally(() => setIsModalOpen(false));

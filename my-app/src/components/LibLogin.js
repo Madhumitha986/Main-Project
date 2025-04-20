@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './lib login.css'; // Assuming you have a CSS file for styling
 import { useNavigate } from 'react-router-dom';
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 
 
@@ -40,8 +41,8 @@ const LibLogin = () => {
         setError('');
 
         try {
-            const response = await axios.post('http://localhost:5000/login-student', { rollnumber });
-            console.log(response.data.success); // Log response for debugging
+            const response = await axios.post(`${backendUrl}/login-student`, { rollnumber });
+            console.log("reponse:",response.data); // Log response for debugging
 
             // Redirect or display success message
             //if (response.data.success) {
@@ -71,7 +72,7 @@ const LibLogin = () => {
 
         try {
             console.log('reched')
-            const response = await axios.post('http://localhost:5000/login-staff', { name, staffid });
+            const response = await axios.post(`${backendUrl}/login-staff`, { name, staffid });
             console.log(response.data); // Log response for debugging
             
 
@@ -95,7 +96,7 @@ const LibLogin = () => {
         try {
             console.log("reached try block");
             console.log(username);
-            const response = await axios.post('http://localhost:5000/login-librarian', { username,password });
+            const response = await axios.post(`${backendUrl}/login-librarian`, { username,password });
             console.log(response.data.success); // Log response for debugging
 
             // Redirect or display success message
