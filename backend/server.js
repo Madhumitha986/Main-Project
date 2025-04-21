@@ -1,7 +1,7 @@
 console.log("Server script is running...");
 
 import express from "express";
-import mysql from "mysql";
+import mysql from "mysql2";
 import cors from "cors";
 import searchRoutes from "./searchRoutes.js";
 import dotenv from 'dotenv';
