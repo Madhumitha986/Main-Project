@@ -30,7 +30,7 @@ export default (io);
 
 const allowedOrigins = [
     "http://localhost:3000", // for local testing
-    "https://acgcet-eeelibrary.vercel.app/" // for production
+    "https://acgcet-eeelibrary.vercel.app" // for production
   ];
   
   app.use(cors({
