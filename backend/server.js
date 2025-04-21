@@ -28,12 +28,24 @@ const io = new Server(server, {
 });
 export default (io);
 
-app.use(cors({
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST", "PUT", "DELETE"],  // Allow DELETE requests
+const allowedOrigins = [
+    "http://localhost:3000", // for local testing
+    "https://acgcet-eeelibrary.vercel.app/" // for production
+  ];
+  
+  app.use(cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
-}));
+  }));
+  
 app.use(express.json());
 // MySQL connection
 const db = mysql.createConnection({
