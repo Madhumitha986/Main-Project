@@ -14,7 +14,7 @@ const tabIcons = {
   staff: <FiUserCheck />,
   books: <FiBookOpen />,
   notifications: <FiBell />,
-  borrowReturn: <FiRepeat />
+  ReturnManagement: <FiRepeat />
 };
 
 
@@ -225,16 +225,17 @@ const handleStaffSearch = () => {
     return (
         <div style={{ display: 'flex', minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
             {/* Sidebar */}
-            <div style={{ width: '250px', backgroundColor: '#003366', color: 'white', padding: '20px' }}>
-                <h2 style={{ textAlign: 'center' }}>ACGCET Library</h2>
+            <div style={{ width: '250px', backgroundColor: '#003366', color: 'white', padding: '50px'}}>
+                <h2 style={{ textAlign: 'center' }}></h2>
                 <nav>
                     <button
   onClick={handleLogout}
   style={{
     position: 'absolute',
+    paddingTop:'50px',
     top: '20px',
     left: '20px',
-    backgroundColor: 'light blue', // indigo
+    backgroundColor:  '#003366', // indigo
     color: 'white',
     border: 'none',
     display: 'flex',
@@ -254,11 +255,12 @@ const handleStaffSearch = () => {
   Logout
 </button>
 
-                    {['dashboard', 'students', 'staff', 'books', 'notifications', 'borrowReturn'].map(tab => (
+                    {['dashboard', 'students', 'staff', 'books', 'notifications', 'ReturnManagement'].map(tab => (
                         <button
                           key={tab}
                           onClick={() => setActiveTab(tab)}
                           style={{
+                            paddingBottom:'20px',
                             display: 'flex',
                             alignItems: 'center',
                             gap: '10px',
@@ -330,7 +332,7 @@ const handleStaffSearch = () => {
                 {activeTab === 'students' && (
                     <div>
                         <h2>Student Borrow Details</h2>
-                        <input type="text" placeholder="Search student..." value={studentSearchInput}
+                        <input type="text" placeholder="Enter rollnumber..." value={studentSearchInput}
                             onChange={(e) => setStudentSearchInput(e.target.value)}
                             style={{ padding: '8px', width: '250px', marginRight: '10px' }} />
                        <button onClick={handleStudentSearch} style={{ padding: '8px', backgroundColor: '#005599', color: 'white', border: 'none', cursor: 'pointer' }}>Search</button>
@@ -515,7 +517,7 @@ const handleStaffSearch = () => {
 
 
                 {/* Borrow & Return Management */}
-                {activeTab === 'borrowReturn' && (
+                {activeTab === 'ReturnManagement' && (
     <div>
         <h2 style={{ color: 'darkblue', marginBottom: '10px' }}>Borrow & Return Management</h2>
         <p style={{ marginBottom: '20px' }}>Track all borrowed books, approve returns, and manage overdue alerts.</p>

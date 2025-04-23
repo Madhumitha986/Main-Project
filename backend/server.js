@@ -48,29 +48,31 @@ const allowedOrigins = [
   
 app.use(express.json());
 // MySQL connection
-const db = mysql.createConnection({
+const db = mysql.createPool({
+    connectionLimit: 20, // You can increase this limit as needed
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,  // Your database name
+    database: process.env.DB_NAME,
 });
-app.use("/api", searchRoutes(db,io));
+
+// Pass db and io to your route
+app.use("/api", searchRoutes(db, io));
+
+// Middleware to attach io to req
 app.use((req, res, next) => {
     req.io = io;
     next();
 });
 
-
-
-
-
-
-db.connect((err) => {
+// Optional: Test the database connection (one-time test query)
+db.getConnection((err, connection) => {
     if (err) {
-        console.error('Error connecting to MySQL:', err);
+        console.error("Error connecting to MySQL:", err);
         return;
     }
-    console.log('Connected to MySQL database');
+    console.log("Connected to MySQL database via connection pool");
+    connection.release(); // Release connection back to pool
 });
 
 // Example route for student registration
@@ -356,19 +358,7 @@ app.get('/pending-requests', (req, res) => {
     });
 });
 
-/*{// Socket.io connection
-io.on("connection", (socket) => {
-    console.log("A user connected");
 
-    socket.on("librarianLogin", () => {
-        socket.join("librarianRoom");
-        console.log("Librarian joined the room");
-    });
-
-    socket.on("disconnect", () => {
-        console.log("A user disconnected");
-    });
-});}*/
 
 // Start the server
 const PORT = 5000

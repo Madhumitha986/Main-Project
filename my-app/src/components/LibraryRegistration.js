@@ -1,267 +1,160 @@
 import React, { useState } from 'react';
-import './lib register.css'; // Ensure your CSS file is in the same folder
-import axios from 'axios'; // Import axios
+import axios from 'axios';
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
-function LibraryRegistration() {
+const LibraryRegistration = () => {
     const [activeTab, setActiveTab] = useState('Student');
 
-    // State for Student registration
     const [studentData, setStudentData] = useState({
         name: '',
         rollnumber: '',
-        email: '',
-        contactnumber: '',
-        academicyear: ''
+        department: '',
+        email: ''
     });
 
-    // State for Staff registration
     const [staffData, setStaffData] = useState({
         name: '',
         staffid: '',
-        contactnumber: ''
+        department: '',
+        email: ''
     });
 
-    // State for Librarian registration
     const [librarianData, setLibrarianData] = useState({
         username: '',
-        password: '',
-        confirmPassword: ''
+        password: ''
     });
 
-    // Handle input change for each form
-    const handleInputChange = (event, formType) => {
-        const { name, value } = event.target;
+    const handleTabChange = (tab) => {
+        setActiveTab(tab);
+    };
 
-        if (formType === 'Student') {
-            setStudentData({ ...studentData, [name]: value });
-        } else if (formType === 'Staff') {
-            setStaffData({ ...staffData, [name]: value });
-        } else if (formType === 'Librarian') {
-            setLibrarianData({ ...librarianData, [name]: value });
+    const handleStudentRegister = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.post(`${backendUrl}/register-student`, studentData);
+            alert('Student registered successfully');
+        } catch (err) {
+            alert('Student registration failed');
         }
     };
 
-    // Submit handler for Student registration
-    const handleStudentSubmit = (event) => {
-        event.preventDefault();
-        axios.post(`${backendUrl}/register-student`, studentData)
-          .then(response => {
-            console.log('Student registered successfully:', response.data);
-            alert('Student registered successfully'); 
-          })
-          .catch(error => {
-            if (error.response) {
-                alert(error.response.data.message); // This shows "You are already registered"
-              } else {
-                alert("An unknown error occurred");
-              }
-          });
+    const handleStaffRegister = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.post(`${backendUrl}/register-staff`, staffData);
+            alert('Staff registered successfully');
+        } catch (err) {
+            alert('Staff registration failed');
+        }
     };
 
-    // Submit handler for Staff registration
-    const handleStaffSubmit = (event) => {
-        event.preventDefault();
-        axios.post(`${backendUrl}/register-staff`, staffData)
-          .then(response => {
-            console.log('Staff registered successfully:', response.data);
-            alert('registered successfully');
-          })
-          .catch(error => {
-            if (error.response) {
-                alert(error.response.data.message); // This shows "You are already registered"
-              } else {
-                alert("An unknown error occurred");
-              };
-          });
+    const handleLibrarianRegister = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.post(`${backendUrl}/register-librarian`, librarianData);
+            alert('Librarian registered successfully');
+        } catch (err) {
+            alert('Librarian registration failed');
+        }
     };
 
-    // Submit handler for Librarian registration
-   {/* const handleLibrarianSubmit = (event) => {
-        event.preventDefault();
-        axios.post('http://localhost:5000/register-librarian', librarianData)
-          .then(response => {
-            console.log('Librarian registered successfully:', response.data);
-          })
-          .catch(error => {
-            console.error('Error registering librarian:', error);
-          });
-    };*/}
+    const fontStyle = { fontFamily: '"Times New Roman", serif' };
 
     return (
-        <div>
-            {/* Header Section */}
-            <header>
-                <div className="header-content">
-                    <h1>Welcome to ACGCET Library</h1>
-                    <h3 className="department">Department of EEE</h3>
-                </div>
+        <div style={{ ...fontStyle }}>
+            <header style={{ backgroundColor: "#003366", color: "white", padding: "30px 10px", textAlign: "center" }}>
+                <h1 style={{ margin: 0, fontSize: "40px", letterSpacing: "1px" }}>ACGCET | EEE Department Library</h1>
+                <p style={{ fontSize: "18px", color: "#ccc", marginTop: "8px" }}>Explore. Learn. Grow.</p>
             </header>
 
-            {/* Navigation Menu */}
-            <nav>
-                <ul>
-                    <li><a href="LibraryHome">Home</a></li>
-                    <li><a href="LibLogin">Login</a></li>
-                    <li><a href="LibraryRegistration">Register</a></li>
-                    {/*<li><a href="lib_advance.html">Advanced Search</a></li>
-                    <li><a href="#">Add a Book</a></li>*/}
-                    <li><a href="#">About Us</a></li>
+            <nav style={{ backgroundColor: "#005599", padding: "10px", textAlign: "center" }}>
+                <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                    <li style={{ display: "inline", margin: "0 20px" }}>
+                        <a href="/LibraryHome" style={{ color: "white", textDecoration: "none" }}>Home</a>
+                    </li>
+                    <li style={{ display: "inline", margin: "0 20px" }}>
+                        <a href="/LibLogin" style={{ color: "white", textDecoration: "none" }}>Login</a>
+                    </li>
+                    <li style={{ display: "inline", margin: "0 20px" }}>
+                        <a href="/LibraryRegistration" style={{ color: "white", textDecoration: "none" }}>Register</a>
+                    </li>
+                    <li style={{ display: "inline", margin: "0 20px" }}>
+                        <a href="/About" style={{ color: "white", textDecoration: "none" }}>About Us</a>
+                    </li>
                 </ul>
             </nav>
 
-            {/* Registration Form Section */}
-            <section className="register-section">
-                <h2>Select Registration Type</h2>
-
-                {/* Registration Option Tabs */}
-                <div className="tab">
-                    <button className={`tablinks ${activeTab === 'Student' ? 'active' : ''}`} onClick={() => setActiveTab('Student')}>Student</button>
-                    <button className={`tablinks ${activeTab === 'Staff' ? 'active' : ''}`} onClick={() => setActiveTab('Staff')}>Staff</button>
-                    {/*<button className={`tablinks ${activeTab === 'Librarian' ? 'active' : ''}`} onClick={() => setActiveTab('Librarian')}>Librarian</button>*/}
+            <section style={{ textAlign: "center", marginTop: "30px" }}>
+                <h2 style={{ fontSize: "28px" }}>Register as</h2>
+                <div style={{ marginBottom: "20px" }}>
+                    {['Student', 'Staff', 'Librarian'].map((type) => (
+                        <button
+                            key={type}
+                            onClick={() => handleTabChange(type)}
+                            style={{
+                                ...fontStyle,
+                                padding: "10px 20px",
+                                marginRight: "10px",
+                                backgroundColor: activeTab === type ? "#005599" : "#ccc",
+                                color: activeTab === type ? "white" : "black",
+                                border: "none",
+                                cursor: "pointer"
+                            }}
+                        >
+                            {type}
+                        </button>
+                    ))}
                 </div>
 
-                {/* Student Registration Form */}
-                <div className="tabcontent" style={{ display: activeTab === 'Student' ? 'block' : 'none' }}>
-                    <h3>Student Registration</h3>
-                    <form onSubmit={handleStudentSubmit}>
-                        <label htmlFor="studentname">Name:</label>
-                        <input
-                            type="text"
-                            id="studentname"
-                            name="name"
-                            placeholder="Enter your name"
-                            value={studentData.name}
-                            onChange={(e) => handleInputChange(e, 'Student')}
-                            required
-                        />
-                        <label htmlFor="rollnumber">Roll Number:</label>
-                        <input
-                            type="text"
-                            id="rollnumber"
-                            name="rollnumber"
-                            placeholder="Enter your roll number"
-                            value={studentData.rollnumber}
-                            onChange={(e) => handleInputChange(e, 'Student')}
-                            required
-                        />
-                        <label htmlFor="email">Email:</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="Enter your email"
-                            value={studentData.email}
-                            onChange={(e) => handleInputChange(e, 'Student')}
-                            required
-                        />
-                        <label htmlFor="contactnumber">Contact Number:</label>
-                        <input
-                            type="text"
-                            id="contactnumber"
-                            name="contactnumber"
-                            placeholder="Enter your contact number"
-                            value={studentData.contactnumber}
-                            onChange={(e) => handleInputChange(e, 'Student')}
-                            required
-                        />
-                        <label htmlFor="academicyear">Academic Year:</label>
-                        <input
-                            type="text"
-                            id="academicyear"
-                            name="academicyear"
-                            placeholder="Enter your academic year"
-                            value={studentData.academicyear}
-                            onChange={(e) => handleInputChange(e, 'Student')}
-                            required
-                        />
-                        <button type="submit">Register</button>
+                {activeTab === 'Student' && (
+                    <form onSubmit={handleStudentRegister}>
+                        <input type="text" placeholder="Name" required value={studentData.name} onChange={(e) => setStudentData({ ...studentData, name: e.target.value })} style={inputStyle} /><br />
+                        <input type="text" placeholder="Roll Number" required value={studentData.rollnumber} onChange={(e) => setStudentData({ ...studentData, rollnumber: e.target.value })} style={inputStyle} /><br />
+                        <input type="text" placeholder="Department" required value={studentData.department} onChange={(e) => setStudentData({ ...studentData, department: e.target.value })} style={inputStyle} /><br />
+                        <input type="email" placeholder="Email" required value={studentData.email} onChange={(e) => setStudentData({ ...studentData, email: e.target.value })} style={inputStyle} /><br />
+                        <button type="submit" style={buttonStyle}>Register</button>
                     </form>
-                </div>
+                )}
 
-                {/* Staff Registration Form */}
-                <div className="tabcontent" style={{ display: activeTab === 'Staff' ? 'block' : 'none' }}>
-                    <h3>Staff Registration</h3>
-                    <form onSubmit={handleStaffSubmit}>
-                        <label htmlFor="staffname">Name:</label>
-                        <input
-                            type="text"
-                            id="staffname"
-                            name="name"
-                            placeholder="Enter your name"
-                            value={staffData.name}
-                            onChange={(e) => handleInputChange(e, 'Staff')}
-                            required
-                        />
-                        <label htmlFor="staffid">Staff ID:</label>
-                        <input
-                            type="text"
-                            id="staffid"
-                            name="staffid"
-                            placeholder="Enter your staff ID"
-                            value={staffData.staffid}
-                            onChange={(e) => handleInputChange(e, 'Staff')}
-                            required
-                        />
-                        <label htmlFor="staffContact">Contact Number:</label>
-                        <input
-                            type="text"
-                            id="staffContact"
-                            name="contactnumber"
-                            placeholder="Enter your contact number"
-                            value={staffData.contactnumber}
-                            onChange={(e) => handleInputChange(e, 'Staff')}
-                            required
-                        />
-                        <button type="submit">Register</button>
+                {activeTab === 'Staff' && (
+                    <form onSubmit={handleStaffRegister}>
+                        <input type="text" placeholder="Name" required value={staffData.name} onChange={(e) => setStaffData({ ...staffData, name: e.target.value })} style={inputStyle} /><br />
+                        <input type="text" placeholder="Staff ID" required value={staffData.staffid} onChange={(e) => setStaffData({ ...staffData, staffid: e.target.value })} style={inputStyle} /><br />
+                        <input type="text" placeholder="Department" required value={staffData.department} onChange={(e) => setStaffData({ ...staffData, department: e.target.value })} style={inputStyle} /><br />
+                        <input type="email" placeholder="Email" required value={staffData.email} onChange={(e) => setStaffData({ ...staffData, email: e.target.value })} style={inputStyle} /><br />
+                        <button type="submit" style={buttonStyle}>Register</button>
                     </form>
-                </div>
+                )}
 
-                {/* Librarian Registration Form */}
-              {/* <div className="tabcontent" style={{ display: activeTab === 'Librarian' ? 'block' : 'none' }}>
-                    <h3>Librarian Registration</h3>
-                    <form onSubmit={handleLibrarianSubmit}>
-                        <label htmlFor="username">Username:</label>
-                        <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            placeholder="Enter your username"
-                            value={librarianData.username}
-                            onChange={(e) => handleInputChange(e, 'Librarian')}
-                            required
-                        />
-                        <label htmlFor="password">Password:</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="Enter your password"
-                            value={librarianData.password}
-                            onChange={(e) => handleInputChange(e, 'Librarian')}
-                            required
-                        />
-                        <label htmlFor="confirmpassword">Confirm Password:</label>
-                        <input
-                            type="password"
-                            id="confirmpassword"
-                            name="confirmPassword"
-                            placeholder="Confirm your password"
-                            value={librarianData.confirmPassword}
-                            onChange={(e) => handleInputChange(e, 'Librarian')}
-                            required
-                        />
-                        <button type="submit">Register</button>
+                {activeTab === 'Librarian' && (
+                    <form onSubmit={handleLibrarianRegister}>
+                        <input type="text" placeholder="Username" required value={librarianData.username} onChange={(e) => setLibrarianData({ ...librarianData, username: e.target.value })} style={inputStyle} /><br />
+                        <input type="password" placeholder="Password" required value={librarianData.password} onChange={(e) => setLibrarianData({ ...librarianData, password: e.target.value })} style={inputStyle} /><br />
+                        <button type="submit" style={buttonStyle}>Register</button>
                     </form>
-                </div>*/}
+                )}
             </section>
 
-            {/* Footer Section */}
-            <footer>
-                <p>&copy; 2024 ACGCET Library. All Rights Reserved.</p>
+            <footer style={{ backgroundColor: "#003366", color: "white", padding: "15px 10px", textAlign: "center", marginTop: "40px" }}>
+                <p style={{ margin: 0 }}>&copy; 2025 ACGCET Library. All rights reserved.</p>
             </footer>
         </div>
     );
-}
+};
+
+const inputStyle = {
+    padding: "10px",
+    width: "250px",
+    marginBottom: "10px",
+    fontFamily: "Times New Roman"
+};
+
+const buttonStyle = {
+    padding: "10px 20px",
+    backgroundColor: "#005599",
+    color: "white",
+    border: "none",
+    cursor: "pointer"
+};
 
 export default LibraryRegistration;

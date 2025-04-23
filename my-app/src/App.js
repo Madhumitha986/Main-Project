@@ -10,6 +10,7 @@ import SearchResults from './components/SearchResults';
 import ProfileSearchResults from './components/ProfileSearchResults';
 import StudentDetails from './components/studentdetails';
 import StaffDetails from './components/staffdetails';
+import About from './components/About';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/StudentDetails/:rollnumber" element={<StudentDetails />} />
           <Route path="/StaffDetails/:staffid" element={<StaffDetails />} />
           <Route path="/LibraryRegistration" element={<LibraryRegistration />} />  {/* Register page */}
+          <Route path="/About" element={<About/>} />
         </Routes>
       </div>
     </Router>
