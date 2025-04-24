@@ -71,8 +71,8 @@ const LibraryHome = () => {
 
   const policyStatements = [
     "🧑‍🎓 Students and staff with valid ACGCET credentials can log in and access resources.",
-    "📖 Books can be borrowed for a maximum of 14 days.",
-    "⌛ A fine of ₹5/day will be charged for late returns.",
+    "📖 Books can be borrowed for a maximum of 90 days.",
+    "⌛ No fine will be charged for late returns.",
     "🔐 Only registered users can make borrow requests."
   ];
   const [policyIndex, setPolicyIndex] = useState(0);

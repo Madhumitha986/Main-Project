@@ -157,7 +157,7 @@ function About() {
           </div>
 
           <div style={memberCard}>
-            <img style={memberImg} src="/images/t4.jpg" alt="UI/UX Designer" />
+            <img style={memberImg} src="/images/an.jpg" alt="UI/UX Designer" />
             <h4>ANITHA R</h4>
             <p><em>Frontend developer</em></p>
           </div>

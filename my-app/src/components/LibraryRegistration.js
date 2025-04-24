@@ -8,21 +8,20 @@ const LibraryRegistration = () => {
     const [studentData, setStudentData] = useState({
         name: '',
         rollnumber: '',
-        department: '',
-        email: ''
+        email: '',
+        contactnumber: '',
+        academicyear:'',
+        
     });
 
     const [staffData, setStaffData] = useState({
         name: '',
         staffid: '',
-        department: '',
-        email: ''
+        contactnumber: '',
+        
     });
 
-    const [librarianData, setLibrarianData] = useState({
-        username: '',
-        password: ''
-    });
+    
 
     const handleTabChange = (tab) => {
         setActiveTab(tab);
@@ -33,6 +32,8 @@ const LibraryRegistration = () => {
         try {
             await axios.post(`${backendUrl}/register-student`, studentData);
             alert('Student registered successfully');
+window.location.reload();
+
         } catch (err) {
             alert('Student registration failed');
         }
@@ -43,21 +44,14 @@ const LibraryRegistration = () => {
         try {
             await axios.post(`${backendUrl}/register-staff`, staffData);
             alert('Staff registered successfully');
+window.location.reload();
+
         } catch (err) {
             alert('Staff registration failed');
         }
     };
 
-    const handleLibrarianRegister = async (e) => {
-        e.preventDefault();
-        try {
-            await axios.post(`${backendUrl}/register-librarian`, librarianData);
-            alert('Librarian registered successfully');
-        } catch (err) {
-            alert('Librarian registration failed');
-        }
-    };
-
+    
     const fontStyle = { fontFamily: '"Times New Roman", serif' };
 
     return (
@@ -87,7 +81,7 @@ const LibraryRegistration = () => {
             <section style={{ textAlign: "center", marginTop: "30px" }}>
                 <h2 style={{ fontSize: "28px" }}>Register as</h2>
                 <div style={{ marginBottom: "20px" }}>
-                    {['Student', 'Staff', 'Librarian'].map((type) => (
+                    {['Student', 'Staff'].map((type) => (
                         <button
                             key={type}
                             onClick={() => handleTabChange(type)}
@@ -110,8 +104,9 @@ const LibraryRegistration = () => {
                     <form onSubmit={handleStudentRegister}>
                         <input type="text" placeholder="Name" required value={studentData.name} onChange={(e) => setStudentData({ ...studentData, name: e.target.value })} style={inputStyle} /><br />
                         <input type="text" placeholder="Roll Number" required value={studentData.rollnumber} onChange={(e) => setStudentData({ ...studentData, rollnumber: e.target.value })} style={inputStyle} /><br />
-                        <input type="text" placeholder="Department" required value={studentData.department} onChange={(e) => setStudentData({ ...studentData, department: e.target.value })} style={inputStyle} /><br />
                         <input type="email" placeholder="Email" required value={studentData.email} onChange={(e) => setStudentData({ ...studentData, email: e.target.value })} style={inputStyle} /><br />
+                        <input type="text" placeholder="Contact number" required value={studentData.contactnumber} onChange={(e) => setStudentData({ ...studentData, contactnumber: e.target.value })} style={inputStyle} /><br />
+                        <input type="text" placeholder="Academic year" required value={studentData.academicyear} onChange={(e) => setStudentData({ ...studentData, academicyear: e.target.value })} style={inputStyle} /><br />
                         <button type="submit" style={buttonStyle}>Register</button>
                     </form>
                 )}
@@ -120,19 +115,12 @@ const LibraryRegistration = () => {
                     <form onSubmit={handleStaffRegister}>
                         <input type="text" placeholder="Name" required value={staffData.name} onChange={(e) => setStaffData({ ...staffData, name: e.target.value })} style={inputStyle} /><br />
                         <input type="text" placeholder="Staff ID" required value={staffData.staffid} onChange={(e) => setStaffData({ ...staffData, staffid: e.target.value })} style={inputStyle} /><br />
-                        <input type="text" placeholder="Department" required value={staffData.department} onChange={(e) => setStaffData({ ...staffData, department: e.target.value })} style={inputStyle} /><br />
-                        <input type="email" placeholder="Email" required value={staffData.email} onChange={(e) => setStaffData({ ...staffData, email: e.target.value })} style={inputStyle} /><br />
+                        <input type="text" placeholder="contactnumber" required value={staffData.contactnumber} onChange={(e) => setStaffData({ ...staffData, contactnumber: e.target.value })} style={inputStyle} /><br />
+                        
                         <button type="submit" style={buttonStyle}>Register</button>
                     </form>
                 )}
 
-                {activeTab === 'Librarian' && (
-                    <form onSubmit={handleLibrarianRegister}>
-                        <input type="text" placeholder="Username" required value={librarianData.username} onChange={(e) => setLibrarianData({ ...librarianData, username: e.target.value })} style={inputStyle} /><br />
-                        <input type="password" placeholder="Password" required value={librarianData.password} onChange={(e) => setLibrarianData({ ...librarianData, password: e.target.value })} style={inputStyle} /><br />
-                        <button type="submit" style={buttonStyle}>Register</button>
-                    </form>
-                )}
             </section>
 
             <footer style={{ backgroundColor: "#003366", color: "white", padding: "15px 10px", textAlign: "center", marginTop: "40px" }}>

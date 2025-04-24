@@ -52,7 +52,7 @@ const LibLogin = () => {
         setError('');
 
         try {
-            const response = await axios.post('http://localhost:5000/login-staff', { name, staffid });
+            const response = await axios.post('${backendUrl}/login-staff', { name, staffid });
             if (response.data.success) {
                 navigate(`/staffProfile?staffid=${response.data.staffid}&borrowerType=staff`);
             } else {
@@ -71,7 +71,7 @@ const LibLogin = () => {
         setError('');
 
         try {
-            const response = await axios.post('http://localhost:5000/login-librarian', { username, password });
+            const response = await axios.post(`${backendUrl}/login-librarian`, { username, password });
             if (response.data.success) {
                 navigate(`/librarianProfile`);
             } else {
