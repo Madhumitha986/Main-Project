@@ -160,7 +160,7 @@ const LibraryHome = () => {
 
       {/* Footer */}
       <footer style={{ backgroundColor: "#003366", color: "white", textAlign: "center", padding: "10px 0" }}>
-        <p>&copy; 2024 ACGCET Library. All Rights Reserved.</p>
+        <p>&copy; 2025 ACGCET Library. All Rights Reserved.</p>
       </footer>
     </div>
   );

@@ -52,7 +52,7 @@ const LibLogin = () => {
         setError('');
 
         try {
-            const response = await axios.post('${backendUrl}/login-staff', { name, staffid });
+            const response = await axios.post(`${backendUrl}/login-staff`, { name, staffid });
             if (response.data.success) {
                 navigate(`/staffProfile?staffid=${response.data.staffid}&borrowerType=staff`);
             } else {
@@ -174,7 +174,7 @@ const LibLogin = () => {
             </section>
 
             <footer style={{ backgroundColor: "#003366", color: "white", padding: "15px 10px", textAlign: "center", marginTop: "40px" }}>
-                <p style={{ margin: 0 }}>&copy; 2024 ACGCET Library. All Rights Reserved.</p>
+                <p style={{ margin: 0 }}>&copy; 2025 ACGCET Library. All Rights Reserved.</p>
             </footer>
         </div>
     );
